@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LogIn, Mail, Lock, ArrowRight, Loader2 } from 'lucide-react';
+import { Mail, Lock, Loader2 } from 'lucide-react';
 import { z } from 'zod';
 import { useAuthStore } from '../store/useAuthStore';
 import { showApiErrorToast } from '../lib/apiErrorHandler';
@@ -49,118 +49,94 @@ const LoginPage: React.FC = () => {
   const onSubmit = () => submitForm(handleLogin);
 
   return (
-    <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-indigo-50">
-      <div>
-        <h2 className="text-center text-3xl font-extrabold text-indigo-900">
-          Sign in to your account
-        </h2>
-      </div>
-
-      <div>
-        <div className="bg-white py-8 px-4 shadow-lg sm:px-10 rounded-lg">
-          <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-indigo-900">
-                Email address
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                  <Mail className="h-5 w-5 text-indigo-600" aria-hidden="true" />
-                </div>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={values.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                  onBlur={() => handleBlur('email')}
-                  className={`block w-full px-3 py-2 pl-10 bg-white border ${
-                    touched.email && errors.email ? 'border-red-500' : 'border-indigo-200'
-                  } rounded-md shadow-sm placeholder-indigo-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors duration-200`}
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                />
-              </div>
-              {touched.email && errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-              )}
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium text-indigo-900">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <Link 
-                    to="/forgot-password" 
-                    className="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
-              </div>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                  <Lock className="h-5 w-5 text-indigo-600" aria-hidden="true" />
-                </div>
-                <input
-                  id="password"
-                  type="password"
-                  required
-                  value={values.password}
-                  onChange={(e) => handleChange('password', e.target.value)}
-                  onBlur={() => handleBlur('password')}
-                  className={`block w-full px-3 py-2 pl-10 bg-white border ${
-                    touched.password && errors.password ? 'border-red-500' : 'border-indigo-200'
-                  } rounded-md placeholder-indigo-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors duration-200`}
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                />
-              </div>
-              {touched.password && errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-              )}
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                disabled={isSubmitting || !isValid}
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                  isSubmitting || !isValid
-                    ? 'bg-purple-400 cursor-not-allowed'
-                    : 'bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200'
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                    Signing in...
-                  </>
-                ) : (
-                  <>
-                    <LogIn className="mr-2 h-4 w-4" aria-hidden="true" />
-                    Sign in
-                  </>
-                )}
-              </button>
-            </div>
-          </form>
-
-          <OAuthButtons />
-
-          <p className="mt-8 text-center text-sm text-indigo-600">
-            Not a member?{" "}
-            <Link 
-              to="/signup" 
-              className="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200"
-              state={{ from: location.state?.from }}
-            >
-              Sign up now <ArrowRight className="inline h-4 w-4" />
-            </Link>
-          </p>
+    <div className="min-h-screen flex items-center justify-center bg-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-indigo-900">Sign in to your account</h2>
         </div>
+
+        <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="mt-6 space-y-4">
+          <div>
+            <label htmlFor="email" className="sr-only">Email address</label>
+            <div className="relative rounded-md shadow-sm">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <Mail className="h-5 w-5 text-indigo-500" />
+              </div>
+              <input
+                id="email"
+                type="email"
+                required
+                value={values.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+                onBlur={() => handleBlur('email')}
+                className={`appearance-none block w-full pl-10 pr-3 py-2 border ${
+                  touched.email && errors.email ? 'border-red-500' : 'border-gray-300'
+                } rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200`}
+                placeholder="Email address"
+                autoComplete="email"
+              />
+            </div>
+            {touched.email && errors.email && (
+              <p className="mt-1 text-xs text-red-600">{errors.email}</p>
+            )}
+          </div>
+
+          <div>
+            <div className="relative rounded-md shadow-sm mt-1">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <Lock className="h-5 w-5 text-indigo-500" />
+              </div>
+              <input
+                id="password"
+                type="password"
+                required
+                value={values.password}
+                onChange={(e) => handleChange('password', e.target.value)}
+                onBlur={() => handleBlur('password')}
+                className={`appearance-none block w-full pl-10 pr-3 py-2 border ${
+                  touched.password && errors.password ? 'border-red-500' : 'border-gray-300'
+                } rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200`}
+                placeholder="Password"
+                autoComplete="current-password"
+              />
+            </div>
+            {touched.password && errors.password && (
+              <p className="mt-1 text-xs text-red-600">{errors.password}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting || !isValid}
+            className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+              isSubmitting || !isValid
+                ? 'bg-purple-400 cursor-not-allowed'
+                : 'bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200'
+            }`}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing in...
+              </>
+            ) : (
+              'Sign in'
+            )}
+          </button>
+        </form>
+
+        <OAuthButtons />
+
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Don't have an account?{' '}
+          <Link 
+            to="/signup" 
+            className="font-medium text-purple-600 hover:text-purple-500"
+            state={{ from: location.state?.from }}
+          >
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
