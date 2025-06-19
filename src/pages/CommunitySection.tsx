@@ -62,8 +62,6 @@ const CommunitySection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'members' | 'projects' | 'tasks'>('members');
   const [isMounted, setIsMounted] = useState(false);
   const { getCommunity } = useCommunityStore();
-  // const { projects, fetchProjects, loading: projectsLoading } = useProjectStore();
-  // const { tasks, fetchTasks, loading: tasksLoading } = useTaskStore();
   const { members, fetchMembers, loading: membersLoading } = useMemberStore();
   const [community, setCommunity] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -90,8 +88,6 @@ const CommunitySection: React.FC = () => {
         const [communityData] = await Promise.all([
           getCommunity(communityId),
           fetchMembers(communityId),
-          // fetchProjects(communityId),
-          // fetchTasks(communityId)
         ]);
 
         if (!communityData) {

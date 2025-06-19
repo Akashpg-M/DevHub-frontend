@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useCommunityStore } from '../store/useCommunityStore';
 import { useAuthStore } from '../store/useAuthStore';
-import { Search, ArrowRight, Loader2, X, ArrowLeft, Users } from 'lucide-react';
+import { Search, Loader2, X, ArrowLeft, Users } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 export default function BrowseCommunities() {
@@ -39,7 +39,7 @@ export default function BrowseCommunities() {
       setIsJoining(communityId);
       const success = await joinCommunity(communityId);
       if (success) {
-        toast.success('Successfully joined the community!');
+        toast.success('Successfully joined the community!, u can now access it from "your CommunityPage"');
       }
     } catch (error) {
       console.error('Error joining community:', error);
@@ -127,12 +127,6 @@ export default function BrowseCommunities() {
                       </div>
                       <p className="mt-2 text-sm text-gray-500 line-clamp-3">{community.description}</p>
                       <div className="mt-4 flex justify-between items-center">
-                        <Link
-                          to={`/communities/${community.id}`}
-                          className="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                          View community <ArrowRight className="ml-1 h-4 w-4" />
-                        </Link>
                         <button
                           onClick={() => handleJoin(community.id)}
                           disabled={!!isJoining}
