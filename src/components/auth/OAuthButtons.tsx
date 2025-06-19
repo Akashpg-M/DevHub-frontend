@@ -228,12 +228,12 @@ export const OAuthButtons = ({
   const handleOAuthLogin = (provider: OAuthProvider) => {
     // Generate state matching backend format
     const stateParam = btoa(JSON.stringify({ returnTo: from }));
-
+    const backendUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
     if (provider === 'google') {
-      const redirectUrl = `http://localhost:3000/api/auth/google?prompt=select_account&state=${encodeURIComponent(stateParam)}`;
+      const redirectUrl = `${backendUrl}/api/auth/google?prompt=select_account&state=${encodeURIComponent(stateParam)}`;
       window.location.href = redirectUrl;
     } else {
-      const redirectUrl = `http://localhost:3000/api/auth/${provider}?state=${encodeURIComponent(stateParam)}`;
+      const redirectUrl = `${backendUrl}/api/auth/${provider}?state=${encodeURIComponent(stateParam)}`;
       window.location.href = redirectUrl;
     }
   };
