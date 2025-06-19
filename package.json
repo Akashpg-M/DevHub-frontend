@@ -28,6 +28,7 @@
     "lucide-react": "^0.514.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.2",
@@ -37,5 +38,8 @@
     "vite": "^6.3.5",
     "zod": "^3.25.64",
     "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7"
   }
 }
