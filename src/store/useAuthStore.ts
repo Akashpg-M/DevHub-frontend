@@ -175,16 +175,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ loading: true });
     try {
       const res = await axios.post("api/auth/login", { email, password }, { withCredentials: true });
+      console.log('Login response:', { data: res.data, headers: res.headers }); // Debug
       const userData = res.data.data; // Backend wraps user in 'data'
       if (!userData?.id) throw new Error("Invalid user data");
 
       set({ user: userData, loading: false });
       toast.success("Login successful");
+      await get().checkAuth(); // Verify cookie  
     } catch (error) {
       set({ loading: false });
       const message = error instanceof AxiosError
         ? error.response?.data?.message || "Login failed"
         : "An error occurred";
+      console.error('Login error:', error);
       toast.error(message);
       throw new Error(message);
     }
